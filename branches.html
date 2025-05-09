@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Branches | Doppio Coffee</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+</head>
+<body>
+
+  <!-- Branches Header -->
+  <section class="branch-header">
+    <h1>Our Branches</h1>
+    <p>Visit us at either of our cozy locations</p>
+  </section>
+
+  <!-- Branch 1 -->
+  <section class="branch" id="downtown">
+    <div class="branch-info">
+      <h2>Downtown</h2>
+      <p>123 Main Street</p>
+      <p>Open daily 7am-7pm</p>
+      <div class="branch-highlight">
+        <p>Featured: Our original location with rustic charm</p>
+      </div>
+    </div>
+
+    <div class="branch-gallery swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="assets/images/branch1-1.jpg" alt="Downtown cafe exterior">
+        </div>
+        <div class="swiper-slide">
+          <img src="assets/images/branch1-2.jpg" alt="Downtown cafe interior">
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="branch-map">
+      <iframe src="https://maps.google.com/maps?q=123+Main+Street&output=embed" 
+              allowfullscreen="" 
+              loading="lazy">
+      </iframe>
+    </div>
+  </section>
+
+  <!-- Branch 2 -->
+  <section class="branch" id="riverside">
+    <div class="branch-info">
+      <h2>Riverside</h2>
+      <p>456 River Road</p>
+      <p>Open daily 6:30am-8pm</p>
+      <div class="branch-highlight">
+        <p>Featured: Waterfront views and outdoor seating</p>
+      </div>
+    </div>
+
+    <div class="branch-gallery swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="assets/images/branch2-1.jpg" alt="Riverside cafe exterior">
+        </div>
+        <div class="swiper-slide">
+          <img src="assets/images/branch2-2.jpg" alt="Riverside cafe interior">
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="branch-map">
+      <iframe src="https://maps.google.com/maps?q=456+River+Road&output=embed" 
+              allowfullscreen="" 
+              loading="lazy">
+      </iframe>
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <nav class="burger-menu">
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">☰</label>
+    <div class="menu">
+      <a href="index.html">Home</a>
+      <a href="#downtown">Downtown</a>
+      <a href="#riverside">Riverside</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="menu-overlay"></div>
+  </nav>
+
+  <script src="assets/js/scripts.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script>
+    // Initialize branch galleries
+    new Swiper('.branch-gallery', {
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+    });
+  </script>
+</body>
+</html>

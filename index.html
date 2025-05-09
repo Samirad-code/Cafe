@@ -1,74 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Café Bliss</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doppio Coffee</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-  <header>
-    <div class="burger" onclick="toggleMenu()">☰</div>
-    <nav id="side-menu" class="hidden">
-      <a href="index.html">Home</a>
-      <a href="menu.html">Menu</a>
-      <a href="locations.html">Locations</a>
-      <a href="about.html">About Us</a>
-    </nav>
-  </header>
-
   <!-- Hero Section -->
-  <main>
-    <section class="hero">
-      <div class="hero-text">
-        <h1>Café Doppio</h1>
-        <p>Because you deserve A double dose of Joy.</p>
-        <a href="menu.html" class="cta-button">View Menu</a>
-      </div>
-    </section>
+  <section class="hero">
+    <video autoplay muted loop playsinline>
+      <source src="assets/videos/coffee_shop.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+      <h1>Welcome to Doppio</h1>
+      <p>A story brewed daily.</p>
+    </div>
+  </section>
 
-    <!-- Product Gallery -->
-    <section class="product-gallery">
-      <h2>Our Favorites</h2>
-      <div class="products">
-        <div class="product-card">
-          <img src="images/cake1.jpg" alt="Chocolate Cake" />
-          <h3>Chocolate Truffle Cake</h3>
-          <p>Rich and indulgent, perfect for celebrations.</p>
-        </div>
-        <div class="product-card">
-          <img src="images/drink1.jpg" alt="Iced Latte" />
-          <h3>Classic Iced Latte</h3>
-          <p>Bold espresso with cold milk over ice.</p>
-        </div>
-        <div class="product-card">
-          <img src="images/bakery-item1.jpg" alt="newyork roll" />
-          <h3>Vanilla Dream Cupcake</h3>
-          <p>Light, fluffy, and topped with buttercream.</p>
-        </div>
-      </div>
-    </section>
-  </main>
+  <!-- Photo Tiles -->
+  <section class="photo-tiles">
+    <div class="tile"><img src="assets/images/memory1.jpg" alt="Coffee beans"></div>
+    <div class="tile"><img src="assets/images/memory2.jpg" alt="Cafe interior"></div>
+    <div class="tile"><img src="assets/images/memory3.jpg" alt="Barista preparing coffee"></div>
+  </section>
 
-  <script src="js/script.js"></script>
-<!-- Footer Section -->
-<footer>
-    <div class="footer-content">
-      <div class="contact-info">
-        <h3>Contact Us</h3>
-        <p>123 Main St, City Center</p>
-        <p>Email: info@cafebliss.com</p>
-        <p>Phone: (123) 456-7890</p>
+  <!-- About Section -->
+  <section class="about">
+    <h2>Our Story</h2>
+    <p>Born from a love of craft coffee and community, Doppio is a cozy space where the scent of cinnamon and espresso fills the air every day.</p>
+    <img src="assets/images/hero.jpg" alt="Our team at work">
+  </section>
+
+  <!-- Menu Gallery -->
+  <section class="menu-gallery">
+    <h2 class="menu-title">Menu</h2>
+    <div class="menu-grid">
+      <div class="menu-item" data-aos="fade-up">
+        <img src="assets/images/drink1.jpg" alt="Double Shot Espresso">
+        <div class="menu-overlay">
+          <h3>Double Shot</h3>
+          <p>Rich & bold espresso shot</p>
+          <span>$3.5</span>
+        </div>
       </div>
-      <div class="social-links">
-        <a href="#" target="_blank" class="social-icon">FB</a>
-        <a href="#" target="_blank" class="social-icon">IG</a>
-        <a href="#" target="_blank" class="social-icon">TW</a>
+      <div class="menu-item" data-aos="fade-up">
+        <img src="assets/images/drink1.jpg" alt="Vanilla Latte">
+        <div class="menu-overlay">
+          <h3>Vanilla Latte</h3>
+          <p>Espresso with steamed milk & vanilla</p>
+          <span>$5</span>
+        </div>
+      </div>
+      <div class="menu-item" data-aos="fade-up">
+        <img src="assets/images/cake1.jpg" alt="Macchiato">
+        <div class="menu-overlay">
+          <h3>Macchiato</h3>
+          <p>Espresso with milk foam</p>
+          <span>$4</span>
+        </div>
+      </div>
+      <div class="menu-item" data-aos="fade-up">
+        <img src="assets/images/roll.jpg" alt="Dirty Chai">
+        <div class="menu-overlay">
+          <h3>Dirty Chai</h3>
+          <p>Spiced chai tea with espresso</p>
+          <span>$5</span>
+        </div>
       </div>
     </div>
-    <p class="footer-bottom">© 2025 Café Bliss. All rights reserved.</p>
+  </section>
+
+  <!-- Branches Button -->
+  <section class="branches">
+    <a href="branches.html" class="branches-button">Visit Our Branches</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Doppio Coffee | Follow us @doppiocoffee</p>
   </footer>
-  
+
+  <!-- Burger Menu -->
+  <nav class="burger-menu">
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">☰</label>
+    <div class="menu"> 
+  <!-- menu items here -->
+      <a href="index.html">Home</a>
+      <a href="branches.html">Branches</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="menu-overlay"></div>
+  </nav>
+
+  <!-- Scripts -->
+  <script src="assets/js/scripts.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      once: true
+    });
+  </script>
 </body>
 </html>
