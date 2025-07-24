@@ -1,54 +1,395 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Menu | Café Bliss</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منو | کافی شاپ دوپیو</title>
+ <!-- Main Stylesheets -->
+  <link rel="stylesheet" href="assets/css/_variables.css">
+  <link rel="stylesheet" href="assets/css/_base.css">
+  <link rel="stylesheet" href="assets/css/_layout.css">
+  <link rel="stylesheet" href="assets/css/_components.css">
+  <link rel="stylesheet" href="assets/css/_pages/_branches.css">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-cream: #f5f2e9;
+      --text-dark: #6b6054;
+      --accent-cinnamon: #c46c32;
+      --accent-wood: #d2b48c;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 150px;
+    }
+
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+    }
+
+.menu-top-bar {
+  display: grid;
+  grid-template-columns: auto 1fr auto; /* Left | Center | Right */
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--bg-cream);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow);
+  direction: ltr; /* This keeps the visual order correct */
+}
+
+.menu-top-bar .icon {
+  font-size: 1.5rem;
+  color: var(--text-dark);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logo-container {
+  justify-self: center; /* This is the key to perfect centering */
+}
+
+.logo-container span {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--text-dark);
+}
+
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; /* Space between search and menu icons */
+}
+    /* --- NEW: Search Container --- */
+    .search-container {
+      background-color: var(--bg-cream);
+      padding: 1rem;
+      position: sticky;
+      top: 72px; /* Sticks below the header */
+      z-index: 100;
+      border-bottom: 1px solid #e0dccc;
+      transform: translateY(-100%);
+      transition: transform 0.3s ease-in-out;
+      display: none; /* Hidden by default, managed by JS */
+    }
+    .search-container.active {
+      transform: translateY(0);
+    }
+    .search-wrapper {
+      position: relative;
+    }
+    #menu-search-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 25px;
+      border: 1px solid #e0dccc;
+      font-size: 1rem;
+      font-family: 'Vazirmatn', sans-serif;
+      direction: rtl;
+    }
+    .clear-search-btn {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #aaa;
+      display: none; /* Hidden by default */
+    }
+
+    .category-scroller {
+      position: sticky;
+      top: 72px; /* Default sticky position */
+      background-color: var(--bg-cream);
+      padding: 0.5rem 1rem 1rem 1rem;
+      border-bottom: 1px solid #e0dccc;
+      z-index: 99;
+      transition: top 0.3s ease-in-out;
+    }
+    .category-scroller.pushed-down {
+      top: 146px; /* Pushed down when search is active */
+    }
+
+    .scroll-container { display: flex; overflow-x: auto; gap: 0.75rem; -ms-overflow-style: none; scrollbar-width: none; }
+    .scroll-container::-webkit-scrollbar { display: none; }
+    .category-chip { padding: 0.5rem 1.2rem; background-color: #edeae0; color: var(--text-dark); border: 1px solid #e0dccc; border-radius: 20px; text-decoration: none; white-space: nowrap; font-size: 0.9rem; transition: all 0.2s ease-in-out; }
+    .category-chip.active { background-color: var(--accent-cinnamon); color: white; border-color: var(--accent-cinnamon); font-weight: 700; }
+
+    .menu-content { padding: 1.5rem 1rem; }
+    .menu-category-section { margin-bottom: 2rem; }
+    .menu-category-section h2 { font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--accent-cinnamon); direction: rtl; }
+    .menu-card { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; direction: rtl; }
+    .menu-card-image img { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; }
+    .menu-card-details { flex-grow: 1; }
+    .menu-card-details h3 { font-size: 1.1rem; margin-bottom: 0.3rem; }
+    .menu-card-details p { font-size: 0.85rem; color: #8a7e72; margin-bottom: 0.4rem; }
+    .menu-card-details .price { font-weight: 700; color: var(--text-dark); }
+    
+    #menu-toggle { display: none; }
+    .burger-menu-nav { position: fixed; top: 0; right: -100%; width: 70%; max-width: 300px; height: 100vh; background: var(--accent-wood); box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2); transition: right 0.3s ease; padding: 5rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.5rem; z-index: 1100; direction: rtl; }
+    #menu-toggle:checked ~ .burger-menu-nav { right: 0; }
+    .menu-overlay { position: fixed; top: 0; left: 0; height: 100%; width: 100%; background: rgba(0, 0, 0, 0.4); z-index: 1050; display: none; }
+    #menu-toggle:checked ~ .menu-overlay { display: block; }
+    .burger-menu-nav a { color: var(--text-dark); font-weight: 700; text-decoration: none; font-size: 1.2rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(107, 96, 84, 0.2); }
+  </style>
 </head>
 <body>
 
-  <header>
-    <div class="burger" onclick="toggleMenu()">☰</div>
-    <nav id="side-menu" class="hidden">
-      <a href="index.html">Home</a>
-      <a href="menu.html">Menu</a>
-      <a href="locations.html">Locations</a>
-      <a href="about.html">About Us</a>
-    </nav>
-  </header>
+  <input type="checkbox" id="menu-toggle">
 
-  <main>
-    <h1>Our Menu</h1>
+  <nav class="burger-menu-nav">
+    <a href="index.html">خانه</a>
+    <a href="menu.html">منو</a>
+    <a href="branches.html">شعب</a>
+  </nav>
+  <label for="menu-toggle" class="menu-overlay"></label>
 
-    <section>
-      <h2>🥐 Bakery</h2>
-      <ul>
-        <li>Chocolate Croissant</li>
-        <li>Blueberry Muffin</li>
-        <li>Cinnamon Roll</li>
-      </ul>
-    </section>
+<header class="menu-top-bar">
+    <!-- Left Icon -->
+    <a href="index.html" class="icon" aria-label="Back to Home"><i class="fas fa-arrow-left"></i></a>
+    
+    <!-- Center Logo Text -->
+    <div class="logo-container">
+      <span>کافه دوپیو</span>
+    </div>
+    
+    <!-- Right Icons -->
+    <div class="header-icons">
+      <i id="search-icon" class="fas fa-search icon"></i>
+      <label for="menu-toggle" class="icon menu-icon" aria-label="Open Menu"><i class="fas fa-bars"></i></label>
+    </div>
+</header>
+  
+  <!-- NEW: Search Container -->
+  <div id="search-container" class="search-container">
+    <div class="search-wrapper">
+      <input type="text" id="menu-search-input" placeholder="جستجو در منو...">
+      <span id="clear-search-btn" class="clear-search-btn">×</span>
+    </div>
+  </div>
 
-    <section>
-      <h2>🥤 Cold Drinks</h2>
-      <ul>
-        <li>Iced Americano</li>
-        <li>Lemonade</li>
-        <li>Cold Brew</li>
-      </ul>
-    </section>
+  <nav id="category-scroller" class="category-scroller">
+    <!-- Category chips are the same -->
+    <div class="scroll-container">
+      <a href="#hot-coffee" class="category-chip active">قهوه گرم</a>
+      <a href="#drip-coffee" class="category-chip">قهوه دمی</a>
+      <a href="#hot-drinks" class="category-chip">نوشیدنی گرم</a>
+      <a href="#cold-brew" class="category-chip">نوشیدنی سرد (برپایه قهوه)</a>
+      <a href="#cold-drinks" class="category-chip">نوشیدنی سرد</a>
+      <a href="#protein-drinks" class="category-chip">نوشیدنی پروتئینی</a>
+      <a href="#milk-shake" class="category-chip">میلک شیک</a>
+      <a href="#tea" class="category-chip">چای و دمنوش</a>
+      <a href="#super-food" class="category-chip">سوپرفود</a>
+    </div>
+  </nav>
 
-    <section>
-      <h2>🍓 Shakes</h2>
-      <ul>
-        <li>Strawberry Shake</li>
-        <li>Vanilla Bean Shake</li>
-        <li>Chocolate Oreo Shake</li>
-      </ul>
-    </section>
+  <!-- The entire <main> section with all menu cards remains exactly the same as the previous version -->
+  <main class="menu-content">
+      <!-- All your <section> and <div class="menu-card">...</div> blocks go here, unchanged. -->
+      <!-- I am omitting them here for brevity, but they should be present in your file. -->
+      <section id="hot-coffee" class="menu-category-section">
+        <h2>قهوه گرم</h2>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="اسپرسو"></div><div class="menu-card-details"><h3>اسپرسو</h3><p>شات غلیظ و عصاره خالص قهوه</p><span class="price">۸۵ - ۹۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="امریکانو"></div><div class="menu-card-details"><h3>امریکانو</h3><p>ترکیب اسپرسو با آب داغ، برای طعمی ملایم‌تر</p><span class="price">۸۵ - ۹۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="لاته"></div><div class="menu-card-details"><h3>لاته</h3><p>اسپرسوی غنی به همراه شیر بخار داده شده و لایه‌ای از فوم</p><span class="price">۱۱۵ - ۱۳۰ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="کاپوچینو"></div><div class="menu-card-details"><h3>کاپوچینو</h3><p>تعادل بی‌نظیر اسپرسو، شیر و فوم شیر</p><span class="price">۱۱۵ - ۱۳۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="کارامل ماکیاتو"></div><div class="menu-card-details"><h3>کارامل ماکیاتو</h3><p>لایه هایی از اسپرسو، شیر و سس کارامل خوش طعم</p><span class="price">۱۲۰ - ۱۴۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="موکا اورجینال"></div><div class="menu-card-details"><h3>موکا اورجینال</h3><p>ترکیبی دلنشین از اسپرسو، شکلات داغ و شیر</p><span class="price">۱۲۰ - ۱۴۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="موکا با خامه"></div><div class="menu-card-details"><h3>موکا با خامه</h3><p>موکای کلاسیک به همراه تاجی از خامه زده شده</p><span class="price">۱۷۵ - ۱۹۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="کورتادو"></div><div class="menu-card-details"><h3>کورتادو</h3><p>نسبت مساوی اسپرسو و شیر، برای طعمی قدرتمند</p><span class="price">۱۰۵ - ۱۲۵ هزار تومان</span></div></div>
+      </section>
+
+      <section id="drip-coffee" class="menu-category-section">
+        <h2>قهوه دمی</h2>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="کلد برو"></div><div class="menu-card-details"><h3>کلد برو</h3><p>قهوه دم سرد با طعمی صاف و اسیدیته پایین</p><span class="price">۹۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="کمکس"></div><div class="menu-card-details"><h3>کمکس</h3><p>قهوه دمی با عبور آب داغ از فیلتر کاغذی ضخیم</p><span class="price">۱۵۰ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="رگولار"></div><div class="menu-card-details"><h3>رگولار</h3><p>یک فنجان قهوه دمی ساده و کلاسیک</p><span class="price">۸۵ هزار تومان</span></div></div>
+      </section>
+      
+      <section id="hot-drinks" class="menu-category-section">
+        <h2>نوشیدنی گرم</h2>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="ماسالا"></div><div class="menu-card-details"><h3>ماسالا</h3><p>چای هندی معطر با ترکیبی از ادویه‌جات گرم</p><span class="price">۱۱۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="هات چاکلت"></div><div class="menu-card-details"><h3>هات چاکلت</h3><p>شکلات داغ غلیظ و دلچسب برای روزهای سرد</p><span class="price">۱۱۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="شیر نسکوئیک"></div><div class="menu-card-details"><h3>شیر نسکوئیک</h3><p>طعم نوستالژیک شیر و پودر کاکائو نسکوئیک</p><span class="price">۹۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="شیر نسکوئیک فندق"></div><div class="menu-card-details"><h3>شیر نسکوئیک فندق</h3><p>شیر نسکوئیک به همراه عطر و طعم فندق</p><span class="price">۱۲۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="هات پینات"></div><div class="menu-card-details"><h3>هات پینات</h3><p>نوشیدنی گرم و مقوی بر پایه کره بادام زمینی</p><span class="price">۱۲۵ هزار تومان</span></div></div>
+      </section>
+
+      <section id="cold-brew" class="menu-category-section">
+        <h2>نوشیدنی سرد (برپایه قهوه)</h2>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="آیس امریکانو"></div><div class="menu-card-details"><h3>آیس امریکانو</h3><p>اسپرسو و آب سرد به همراه یخ، با طراوت و انرژی‌بخش</p><span class="price">۸۵ - ۹۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="آیس لاته"></div><div class="menu-card-details"><h3>آیس لاته</h3><p>ترکیب اسپرسو، شیر سرد و یخ برای تجربه‌ای خنک</p><span class="price">۱۱۵ - ۱۳۰ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="آیس کوکونات"></div><div class="menu-card-details"><h3>آیس کوکونات</h3><p>لاته سرد با طعم شیرین و استوایی نارگیل</p><span class="price">۱۴۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="آیس لاته بادوم زمینی"></div><div class="menu-card-details"><h3>آیس لاته بادوم زمینی</h3><p>طعم منحصر به فرد کره بادام زمینی در لاته سرد</p><span class="price">۱۴۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="آیس موکا"></div><div class="menu-card-details"><h3>آیس موکا</h3><p>اسپرسو، شیر و شکلات در بستری از یخ</p><span class="price">۱۲۵ - ۱۴۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="فراپاچینو"></div><div class="menu-card-details"><h3>فراپاچینو</h3><p>نوشیدنی یخی و ترکیبی بر پایه قهوه</p><span class="price">۱۵۰ - ۱۴۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="تونیک اسپرسو"></div><div class="menu-card-details"><h3>تونیک اسپرسو</h3><p>ترکیب شگفت‌انگیز اسپرسو و آب تونیک گازدار</p><span class="price">۱۲۵ - ۱۴۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="فیزی"></div><div class="menu-card-details"><h3>فیزی</h3><p>نوشیدنی گازدار و میوه‌ای برای رفع عطش</p><span class="price">۱۱۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="اورنج کافی"></div><div class="menu-card-details"><h3>اورنج کافی</h3><p>تضاد جذاب طعم قهوه و آب پرتقال تازه</p><span class="price">۱۴۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="پاین اپل برو"></div><div class="menu-card-details"><h3>پاین اپل برو</h3><p>قهوه دم سرد با طعم شیرین و استوایی آناناس</p><span class="price">۱۴۰ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="آفوگاتو"></div><div class="menu-card-details"><h3>آفوگاتو</h3><p>یک اسکوپ بستنی وانیلی غرق در یک شات اسپرسو داغ</p><span class="price">۱۱۰ - ۱۲۵ هزار تومان</span></div></div>
+      </section>
+
+      <section id="cold-drinks" class="menu-category-section">
+          <h2>نوشیدنی سرد</h2>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="تیرامیسو ماسالا"></div><div class="menu-card-details"><h3>تیرامیسو ماسالا</h3><p>طعم دسر تیرامیسو در یک نوشیدنی سرد و ادویه‌ای</p><span class="price">۱۴۰ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="آیس چاکلت"></div><div class="menu-card-details"><h3>آیس چاکلت</h3><p>شکلات سرد و غلیظ، یک دسر نوشیدنی کامل</p><span class="price">۱۴۰ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="لیموناد"></div><div class="menu-card-details"><h3>لیموناد</h3><p>ترکیب کلاسیک لیمو، آب و شکر برای طراوتی بی‌نظیر</p><span class="price">۱۲۰ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="پینا کولادا"></div><div class="menu-card-details"><h3>پینا کولادا</h3><p>نوشیدنی استوایی شیرین با طعم آناناس و نارگیل</p><span class="price">۱۳۵ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="پشن دراگون"></div><div class="menu-card-details"><h3>پشن دراگون</h3><p>ترکیبی هیجان‌انگیز از میوه‌های پشن فروت و دراگون فروت</p><span class="price">۱۴۵ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="سالاموس"></div><div class="menu-card-details"><h3>سالاموس</h3><p>نوشیدنی خنک و متفاوت با ترکیبات خاص</p><span class="price">۱۴۵ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="پینکوا"></div><div class="menu-card-details"><h3>پینکوا</h3><p>لیموناد صورتی با طعمی از توت‌فرنگی و ریحان</p><span class="price">۱۴۵ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="رد موهیتو"></div><div class="menu-card-details"><h3>رد موهیتو</h3><p>موهیتوی کلاسیک با طعم میوه‌های قرمز</p><span class="price">۱۴۵ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="اسموتی بری"></div><div class="menu-card-details"><h3>اسموتی بری</h3><p>ترکیبی مقوی و خوشمزه از انواع توت‌ها</p><span class="price">۱۸۰ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="اسموتی جو"></div><div class="menu-card-details"><h3>اسموتی جو</h3><p>اسموتی سالم و سرشار از فیبر با جو دوسر</p><span class="price">۱۸۰ هزار تومان</span></div></div>
+      </section>
+      
+      <section id="protein-drinks" class="menu-category-section">
+        <h2>نوشیدنی پروتئینی</h2>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="بادوم زمینی"></div><div class="menu-card-details"><h3>بادوم زمینی</h3><p>شیک پروتئینی با طعم کره بادام زمینی</p><span class="price">۲۰۰ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="انبه و آناناس"></div><div class="menu-card-details"><h3>انبه و آناناس</h3><p>ترکیبی استوایی و پرانرژی برای بعد از ورزش</p><span class="price">۲۲۰ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="تروپیکال بری"></div><div class="menu-card-details"><h3>تروپیکال بری</h3><p>مخلوطی از توت‌های گرمسیری و پروتئین</p><span class="price">۲۲۰ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="اوشن پاور"></div><div class="menu-card-details"><h3>اوشن پاور</h3><p>نوشیدنی انرژی‌زا و پروتئینی با رنگی خاص</p><span class="price">۳۰۰ هزار تومان</span></div></div>
+      </section>
+
+      <section id="milk-shake" class="menu-category-section">
+          <h2>میلک شیک</h2>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="وانیل"></div><div class="menu-card-details"><h3>وانیل</h3><p>شیک کلاسیک و همیشه محبوب با طعم وانیل</p><span class="price">۱۵۰ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="شکلات"></div><div class="menu-card-details"><h3>شکلات</h3><p>شیک غلیظ شکلاتی برای عاشقان کاکائو</p><span class="price">۱۵۰ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="شکلات دارک"></div><div class="menu-card-details"><h3>شکلات دارک</h3><p>شیک شکلاتی با طعم تلخ و عمیق شکلات دارک</p><span class="price">۱۵۰ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="نسکافه"></div><div class="menu-card-details"><h3>نسکافه</h3><p>طعم قهوه فوری در یک میلک شیک خنک و دلچسب</p><span class="price">۱۵۰ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="کره بادوم زمینی"></div><div class="menu-card-details"><h3>کره بادوم زمینی</h3><p>شیک مقوی و خوشمزه با طعم کره بادام زمینی</p><span class="price">۱۷۰ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="نوتلا"></div><div class="menu-card-details"><h3>نوتلا</h3><p>طعم بی‌نظیر شکلات فندقی نوتلا در قالب میلک شیک</p><span class="price">۱۷۰ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="انبه"></div><div class="menu-card-details"><h3>انبه</h3><p>شیک میوه‌ای و خنک با طعم انبه استوایی</p><span class="price">۱۵۰ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="شاتوت"></div><div class="menu-card-details"><h3>شاتوت</h3><p>شیک ترش و شیرین با طعم شاه‌توت تازه</p><span class="price">۱۷۰ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="لوتوس"></div><div class="menu-card-details"><h3>لوتوس</h3><p>شیک بیسکوییت لوتوس با طعم کاراملی و ادویه‌ای</p><span class="price">۱۷۰ هزار تومان</span></div></div>
+          <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="ارده"></div><div class="menu-card-details"><h3>ارده</h3><p>شیک متفاوت با طعم مقوی و خاص ارده</p><span class="price">۱۷۰ هزار تومان</span></div></div>
+      </section>
+
+      <section id="tea" class="menu-category-section">
+        <h2>چای و دمنوش</h2>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="چای سیاه"></div><div class="menu-card-details"><h3>چای سیاه</h3><p>یک فنجان چای سیاه دبش و خوش‌رنگ</p><span class="price">۸۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="دمنوش"></div><div class="menu-card-details"><h3>دمنوش</h3><p>ترکیبی آرامش‌بخش از گیاهان معطر (چای ترش، گل گاوزبان، به لیمو)</p><span class="price">۹۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="نعنا مراکشی"></div><div class="menu-card-details"><h3>نعنا مراکشی</h3><p>چای سبز به همراه برگ‌های تازه نعنا</p><span class="price">۱۰۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="آفرینش"></div><div class="menu-card-details"><h3>آفرینش</h3><p>دمنوشی با ترکیبات خاص و منحصر به فرد</p><span class="price">۱۰۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="سیب دارچین"></div><div class="menu-card-details"><h3>سیب دارچین</h3><p>عطر و طعم دلنشین سیب و دارچین در یک فنجان</p><span class="price">۱۰۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="سیب وانیل"></div><div class="menu-card-details"><h3>سیب وانیل</h3><p>ترکیب شیرین سیب و عطر آرامش‌بخش وانیل</p><span class="price">۱۰۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="میکس بری"></div><div class="menu-card-details"><h3>میکس بری</h3><p>دمنوشی از انواع توت‌های جنگلی با طعمی ترش و شیرین</p><span class="price">۱۰۵ هزار تومان</span></div></div>
+      </section>
+
+      <section id="super-food" class="menu-category-section">
+        <h2>سوپرفود</h2>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="چای ماچا"></div><div class="menu-card-details"><h3>چای ماچا</h3><p>چای سبز ژاپنی پودر شده، سرشار از آنتی‌اکسیدان</p><span class="price">۹۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="ماچا لاته"></div><div class="menu-card-details"><h3>ماچا لاته</h3><p>ترکیب ماچا با شیر، نوشیدنی‌ای زیبا و پرخاصیت</p><span class="price">۱۴۰ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="ماچا لاته نارگیل"></div><div class="menu-card-details"><h3>ماچا لاته نارگیل</h3><p>ماچا لاته با طعم شیرین و استوایی شیر نارگیل</p><span class="price">۱۴۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="آیس ماچا لاته توت فرنگی"></div><div class="menu-card-details"><h3>آیس ماچا لاته توت فرنگی</h3><p>ترکیب رنگ و طعم بی‌نظیر ماچا و توت‌فرنگی</p><span class="price">۱۴۰ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="آیس ماچا لوندور"></div><div class="menu-card-details"><h3>آیس ماچا لوندور</h3><p>ماچا سرد به همراه عطر آرامش‌بخش اسطوخودوس</p><span class="price">۱۵۰ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="آیس ماچا فرش"></div><div class="menu-card-details"><h3>آیس ماچا فرش</h3><p>ماچا سرد و تازه برای نهایت انرژی و طراوت</p><span class="price">۲۲۰ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="ماچا فرش"></div><div class="menu-card-details"><h3>ماچا فرش</h3><p>یک شات خالص و تازه از ماچای دم‌شده</p><span class="price">۱۵۵ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="اسپیرولینا لاته"></div><div class="menu-card-details"><h3>اسپیرولینا لاته</h3><p>لاته مقوی با جلبک اسپیرولینا، سرشار از پروتئین و ویتامین</p><span class="price">۲۲۰ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="بلو اوشن"></div><div class="menu-card-details"><h3>بلو اوشن</h3><p>نوشیدنی زیبا و پرخاصیت با رنگ آبی اقیانوسی</p><span class="price">۲۲۰ هزار تومان</span></div></div>
+        <div class="menu-card"><div class="menu-card-image"><img src="assets/images/drink-placeholder.jpg" alt="کول اکای"></div><div class="menu-card-details"><h3>کول اکای</h3><p>نوشیدنی بر پایه میوه آکای، سرشار از آنتی‌اکسیدان</p><span class="price">۲۴۰ هزار تومان</span></div></div>
+      </section>
   </main>
 
-  <script src="js/script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // --- Element Selectors ---
+      const searchIcon = document.getElementById('search-icon');
+      const searchContainer = document.getElementById('search-container');
+      const searchInput = document.getElementById('menu-search-input');
+      const clearSearchBtn = document.getElementById('clear-search-btn');
+      const categoryScroller = document.getElementById('category-scroller');
+      
+      const allCards = document.querySelectorAll('.menu-card');
+      const allSections = document.querySelectorAll('.menu-category-section');
+      const navLinks = document.querySelectorAll('.category-chip');
+
+      // --- Search Toggle ---
+      searchIcon.addEventListener('click', () => {
+        const isActive = searchContainer.classList.toggle('active');
+        if (isActive) {
+          searchContainer.style.display = 'block';
+          setTimeout(() => { // Ensure display is block before transforming
+            searchContainer.classList.add('active');
+            categoryScroller.classList.add('pushed-down');
+            searchInput.focus();
+          }, 10);
+        } else {
+          searchContainer.classList.remove('active');
+          categoryScroller.classList.remove('pushed-down');
+           setTimeout(() => {
+            searchContainer.style.display = 'none';
+          }, 300); // Match transition duration
+        }
+      });
+
+      // --- Filtering Logic ---
+      function filterMenu() {
+        const searchTerm = searchInput.value.toLowerCase();
+        clearSearchBtn.style.display = searchTerm.length > 0 ? 'block' : 'none';
+
+        allCards.forEach(card => {
+          const cardTitle = card.querySelector('h3').textContent.toLowerCase();
+          const cardDesc = card.querySelector('p').textContent.toLowerCase();
+          const isVisible = cardTitle.includes(searchTerm) || cardDesc.includes(searchTerm);
+          card.style.display = isVisible ? 'flex' : 'none';
+        });
+
+        allSections.forEach(section => {
+          const visibleCards = section.querySelectorAll('.menu-card[style*="display: flex"]');
+          section.style.display = visibleCards.length > 0 ? 'block' : 'none';
+        });
+      }
+
+      searchInput.addEventListener('input', filterMenu);
+
+      clearSearchBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        filterMenu();
+      });
+
+      // --- Category Chip Click/Scroll Logic (unchanged) ---
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          navLinks.forEach(nav => nav.classList.remove('active'));
+          this.classList.add('active');
+          const targetSection = document.querySelector(this.getAttribute('href'));
+          if(targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            navLinks.forEach(link => {
+              link.classList.remove('active');
+              if (link.getAttribute('href').substring(1) === entry.target.id) {
+                link.classList.add('active');
+              }
+            });
+          }
+        });
+      }, { rootMargin: '0px', threshold: 0.4 });
+
+      allSections.forEach(section => { observer.observe(section); });
+    });
+  </script>
+
 </body>
 </html>

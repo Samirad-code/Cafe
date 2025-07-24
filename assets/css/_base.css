@@ -1,0 +1,22 @@
+/* Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Tajawal', 'Poppins', sans-serif; /* Primary font is now Tajawal */
+  text-align: right; /* Default text alignment for RTL */
+  background: var(--cream);
+  color: var(--cement);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* iOS Safari viewport height fix */
+@supports (-webkit-touch-callout: none) {
+  .hero {
+    height: -webkit-fill-available;
+  }
+}

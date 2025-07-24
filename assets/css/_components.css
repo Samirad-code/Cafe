@@ -1,0 +1,180 @@
+/* Photo Tiles */
+.photo-tiles {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+  gap: 1rem; /* Added for spacing */
+}
+
+.tile {
+  display: block;
+  position: relative;
+  border-radius: 8px;
+  width: 100%; /* Make it flexible */
+  max-width: 400px; /* Set max-width */
+  overflow: hidden;
+  border: 2px solid var(--wood);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+  aspect-ratio: 1/1;
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.tile:hover {
+  transform: translateY(-5px);
+}
+
+.tile:hover img {
+  transform: scale(1.1);
+}
+
+/* About Section */
+.about {
+  padding: 2rem;
+  text-align: center;
+}
+
+.about h2 {
+  margin-bottom: 1.5rem;
+}
+
+.about p {
+  margin-bottom: 1.5rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 12px;
+  margin-top: 1rem;
+  box-shadow: var(--shadow);
+}
+
+/* Menu Gallery */
+.menu-gallery {
+  padding: 3rem 1rem;
+  background: var(--cream);
+}
+
+.menu-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding: 0 1rem;
+}
+
+.menu-item {
+  position: relative;
+  border-radius: 12px;
+  overflow: visible;
+  box-shadow: var(--shadow);
+  aspect-ratio: 1/1;
+}
+
+.menu-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+/* Renamed from .menu-overlay to avoid conflict */
+.menu-item__details {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(107, 96, 84, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  padding: 1rem;
+  text-align: center;
+  color: white;
+  z-index: 10;
+}
+
+.menu-item:hover .menu-item__details {
+  opacity: 1;
+}
+
+.menu-item:hover img {
+  transform: scale(1.1);
+}
+
+.menu-item__details h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: var(--dirty-orange);
+}
+
+.menu-item__details p {
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.menu-item__details span {
+  font-weight: bold;
+  font-size: 1rem;
+  color: var(--cream);
+}
+
+/* Branches Button */
+.branches {
+  text-align: center;
+  padding: 2rem;
+}
+
+.branches-button {
+  display: inline-block;
+  background: var(--cinnamon);
+  color: white;
+  padding: 1rem 2rem;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+}
+
+.branches-button:hover {
+  background: var(--dirty-orange);
+  transform: translateY(-3px);
+}
+
+/* Responsive Adjustments For Components */
+@media (min-width: 768px) {
+  .photo-tiles {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  
+  .menu-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+    .menu {
+    width: 40%;
+  }
+}
+
