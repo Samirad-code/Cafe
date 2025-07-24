@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doppio Coffee</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <!-- Main Stylesheets -->
+<link rel="stylesheet" href="assets/css/_variables.css">
+<link rel="stylesheet" href="assets/css/_base.css">
+<link rel="stylesheet" href="assets/css/_layout.css">
+<link rel="stylesheet" href="assets/css/_components.css">
+<link rel="stylesheet" href="assets/css/_pages/_branches.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <video autoplay muted loop playsinline>
+      <source src="assets/videos/coffee_shop.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+      <h1>Welcome to Doppio</h1>
+      <p>Because you deserve a double dose of joy.</p>
+    </div>
+  </section>
+
+  <!-- Photo Tiles -->
+  <section class="photo-tiles">
+    <a class="tile" href="details/coffee-beans.html"><img src="assets/images/memory1.jpg" alt="Coffee beans"></a>
+    <a class="tile" href="details/interior.html"><img src="assets/images/memory2.jpg" alt="Cafe interior" /></a>
+    <a class="tile" href="details/extra.html"><img src="assets/images/memory3.jpg" alt="Barista preparing coffee"></a>
+    <a class="tile" href="https://t.me/Dopsmusic"><img src="assets/images/music-channel.jpg" alt="Vibe"></a>    
+  </section>
+
+  <!-- About Section -->
+  <section class="about">
+    <h2>داستان ما</h2>
+    <p>متولد از عشق به قهوه دست‌ساز و جامعه، دُپیو فضایی دنج است که عطر دارچین و اسپرسو هر روز در آن پیچیده است.</p>
+    <img src="assets/images/hero.jpg" alt="Our team at work">
+  </section>
+
+  <!-- Menu Gallery -->
+  <section class="menu-gallery">
+    <h2 class="menu-title">Menu</h2>
+    <div class="menu-grid">
+      <div class="menu-item" data-aos="fade-up">
+        <img src="assets/images/drink1.jpg" alt="Double Shot Espresso">
+        <div class="menu-item__details">
+          <h3>دو شات اسپرسو</h3>
+          <p>هشدار: این نوشیدنی حاوی کافئین بالا است</p>
+          <span>80 هزار تومان</span>
+        </div>
+      </div>
+      <div class="menu-item" data-aos="fade-up">
+        <img src="assets/images/drink1.jpg" alt="Vanilla Latte">
+        <div class="menu-item__details">
+          <h3> لاته</h3>
+          <p>اسپرسو با شیر بخار داده شده و وانیل</p>
+          <span>110 هزار تومان</span>
+        </div>
+      </div>
+      <div class="menu-item" data-aos="fade-up">
+        <img src="assets/images/Brownies.jpg" alt="Brownies">
+        <div class="menu-item__details">
+          <h3>براونی</h3>
+          <p>شیرینی شکلاتی است که بافتی نرم و مرطوب </p>
+          <span>100 هزار تومان</span>
+        </div>
+      </div>
+      <div class="menu-item" data-aos="fade-up">
+        <img src="assets/images/roll.jpg" alt="newyork roll">
+        <div class="menu-item__details">
+          <h3>رول نیویورکی</h3>
+          <p>خمیر کروسان که بافتی سبک و ترد دارد.داخل خمیر کروسان کرم‌ شکلات</p>
+          <span>150 هزار تومان</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Branches Button -->
+  <section class="branches">
+    <a href="branches.html" class="branches-button">از شعب ما دیدن کنید</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+        <!-- Other footer content -->
+        <div class="social-links">
+            <a href="https://www.instagram.com/doppiocafe.ir/" target="_blank" rel="noopener noreferrer">
+               <i class="fab fa-instagram"></i>doppiocafe.ir
+            </a>
+        </div>
+    </div>
+</footer>
+  <!-- Burger Menu -->
+  <nav class="burger-menu">
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">☰</label>
+    <div class="menu">
+      <a href="index.html">خانه</a>
+      <a href="branches.html">شعب</a>
+      <a href="menu.html">منو</a>
+    </div>
+    <label for="menu-toggle" class="menu-overlay"></label>
+  </nav>
+
+
+  <!-- Scripts -->
+  <script src="assets/js/scripts.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      once: true
+    });
+  </script>
+</body>
+</html>

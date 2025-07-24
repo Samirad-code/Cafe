@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl"> <!-- Changed to Persian (fa) and RTL direction -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شعب ما | کافی شاپ دوپیو</title>
+  <!-- Add Persian/Arabic font -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+  <style>
+  /* RTL specific styles */
+    body {
+      font-family: 'Tajawal', 'Poppins', sans-serif;
+      text-align: right;
+    }
+    
+    .branch-info, .branch-highlight {
+      text-align: right;
+    }
+    
+    .branch {
+      direction: rtl;
+    }
+    
+    
+    /* Adjust swiper for RTL */
+    .swiper-wrapper {
+      direction: ltr; /* Keep swiper direction LTR for proper sliding */
+    }
+    
+    /* Fix iframe border issue in RTL */
+    iframe {
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="burger-menu">
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">☰</label>
+    <div class="menu">
+      <a href="index.html">خانه</a>
+      <a href="branches.html">شعب</a>
+      <a href="menu.html">منو</a>
+    </div>
+    <div class="menu-overlay"></div>
+  </nav>
+  
+
+  <!-- Branches Header -->
+  <section class="branch-header">
+    <h1>شعب ما</h1>
+    <p>می توانید از هر یک از شعب دنج ما بازدید کنید</p>
+  </section>
+
+  <!-- Branch 1 -->
+  <section class="branch" id="downtown">
+    <div class="branch-info">
+      <h2>فرهاد</h2>
+      <p>فرهاد 22</p>
+      <p>ساعت کاری: 10 الی 22</p>
+      <div class="branch-highlight">
+        <p>شعبه 1 (جایی که که همه چیز شروع شد)</p>
+      </div>
+    </div>
+
+    <div class="branch-gallery swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="assets/images/branch1-1.jpg" alt="نمای بیرونی کافه شعبه مرکز شهر">
+        </div>
+        <div class="swiper-slide">
+          <img src="assets/images/branch1-2.jpg" alt="نمای داخلی کافه شعبه مرکز شهر">
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="branch-map">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d200.93878786426!2d59.56029850885185!3d36.311807154755435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f6c93af1618a935%3A0x40ac1d84878eb4a9!2sDoppio%20Cafe!5e0!3m2!1sen!2s!4v1748688966528!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+
+  <!-- Branch 2 -->
+  <section class="branch" id="riverside">
+    <div class="branch-info">
+      <h2>حافظ</h2>
+      <p>بلوار وکیل آباد، حافظ 6</p>
+      <p>ساعت کاری: 8 الی 23</p>
+      <div class="branch-highlight">
+        <p>شعبه 2 (جایی که میتونیم بیشتر کنار هم باشیم)</p>
+      </div>
+    </div>
+
+    <div class="branch-gallery swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="assets/images/branch2-1.jpg" alt="نمای بیرونی کافه شعبه بلوار وکیل آباد">
+        </div>
+        <div class="swiper-slide">
+          <img src="assets/images/branch2-2.jpg" alt="نمای داخلی کافه شعبه بلوار وکیل آباد">
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="branch-map">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1418.13167795412!2d59.49417717847445!3d36.32697533395695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f6c8dab62a3fae9%3A0xe5ad2a67d971294a!2sDoppio%20Cafe!5e0!3m2!1sen!2s!4v1748689128250!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+
+  <script src="assets/js/scripts.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script>
+    // Initialize branch galleries
+    new Swiper('.branch-gallery', {
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+    });
+  </script>
+</body>
+</html>
